@@ -1,33 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-}
+} */
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
+} */
 
 body {
-  color: rgb(var(--foreground-rgb));
+  /* color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
+
+    font-family: Manrope;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .max-container {
+    @apply mx-auto max-w-[1440px];
   }
+
+  .padding-container {
+    @apply px-6 lg:px-8 3xl:px-0;
+  }
+
+  .flexCenter {
+    @apply flex items-center justify-center;
+  }
+
+  .flexBetween {
+    @apply flex items-center justify-between;
+  }
+
+  .flexStart {
+    @apply flex items-center justify-start;
+  }
+
+  .flexEnd {
+    @apply flex items-center justify-end;
+  }
+
+   /* font */
+
+  .light-19 {
+    @apply text-[19px] font-[300];
+  }
+
+  .regular-24 {
+    @apply text-[24px] font-[400];
+  }
+
+  .regular-20 {
+    @apply text-[20px] font-[400];
+  }
+
+  .regular-16 {
+    @apply text-[16px] font-[400];
+  }
+
+  .medium-24 {
+    @apply text-[24px] font-[500];
+  }
+
+  .medium-18 {
+    @apply text-[18px] font-[500];
+  }
+
+  .medium-16 {
+    @apply text-[16px] font-[500];
+  }
+
+  .medium-10 {
+    @apply text-[10px] font-[500];
+  }
+
+  .semibold-64 {
+    @apply text-[64px] font-[600];
+  }
+
+  .semibold-40 {
+    @apply text-[40px] font-[600];
+  }
+
+  .semibold-20 {
+    @apply text-[20px] font-[600];
+  }
+
+  .bold-60 {
+    @apply text-[60px] font-[700];
+  }
+
+  .bold-48 {
+    @apply text-[48px] font-[700];
+  }
+
+  .bold-36 {
+    @apply text-[36px] font-[700];
+  }
+
+  .bold-24 {
+    @apply text-[24px] font-[700];
+  }
+
+  .bold-20 {
+    @apply text-[20px] font-[700];
+  }
+
+
 }
