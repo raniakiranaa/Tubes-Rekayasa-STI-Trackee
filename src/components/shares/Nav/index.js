@@ -16,7 +16,7 @@ export const Navbar = () => {
           setActive(1);
         } else if (location == "/qr") {
           setActive(2);
-        } else if (location == "/locate") {
+        } else if (location == "/locate" || location == "/result") {
           setActive(3);
         } else {
           setActive(-1);
@@ -74,7 +74,7 @@ export const Navbar = () => {
                             <Link
                                 href="/locate"
                                 className={`${
-                                active == 1
+                                active == 3
                                     ? "font-bold text-brown-1 bg-white py-2 px-8 rounded-3xl"
                                     : "font-medium text-white"
                                 } text-semibold-24 hover:font-extrabold hover:text-brown-1 truncate`}
