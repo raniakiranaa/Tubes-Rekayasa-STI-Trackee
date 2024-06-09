@@ -7,7 +7,7 @@ import trash from "@/public/icons/trash.svg";
 import { supabase } from "../../../../lib/supabaseClient";
 import { toastError, toastSuccess } from "../../shares/Toast";
 
-const Table = ({ columns, data, setData, message, onRowClick }) => {
+const DashboardTable = ({ columns, data, setData, message, onRowClick }) => {
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [currentRow, setCurrentRow] = useState(null);
@@ -19,11 +19,6 @@ const Table = ({ columns, data, setData, message, onRowClick }) => {
     setEditModal(true);
   };
 
-  const handleDelete = (row) => {
-    setCurrentRow(row);
-    setDeleteModal(true);
-  };  
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedData({
@@ -33,48 +28,31 @@ const Table = ({ columns, data, setData, message, onRowClick }) => {
   };
 
   const handleSubmit = async () => {
+    // Update the data in Supabase
     const { error } = await supabase
-      .from('item')
+      .from('product')
       .update({
-        exp_date: editedData.expiredDate
+        product_id: editedData.productID,
+        name: editedData.productName,
+        brand: editedData.brand,
+        category: editedData.category
       })
-      .eq('product_id', currentRow.productID)
-      .eq('item_id', currentRow.itemID);
+      .eq('product_id', currentRow.productID);
 
     if (error) {
       console.error('Error updating data:', error);
-      toastError('Error edit item!');
-
+      toastError('Error edit product!');
       return;
     } else {
-      toastSuccess("Edit Item Succesful");
+      toastSuccess('Edit product successful!');
     }
 
+    // Update the local state
     const updatedData = data.map((row) =>
-      row.productID === currentRow.productID && row.itemID === currentRow.itemID
-        ? { ...row, expiredDate: editedData.expiredDate }
-        : row
+      row.productID === currentRow.productID ? editedData : row
     );
     setData(updatedData);
     setEditModal(false);
-  };
-
-  const handleSaveDelete = async () => {
-    try {
-      await supabase
-        .from('item')
-        .delete()
-        .eq('product_id', currentRow.productID)
-        .eq('item_id', currentRow.itemID);
-
-      const updatedData = data.filter(item => item !== currentRow);
-      setData(updatedData);
-      setDeleteModal(false);
-      toastSuccess("Item deleted successfully");
-    } catch (error) {
-      console.error('Error deleting item:', error);
-      toastError('Error deleting item!');
-    }
   };
 
   if (!columns || !data || data.length === 0) {
@@ -85,14 +63,13 @@ const Table = ({ columns, data, setData, message, onRowClick }) => {
     );
   }
 
-
   return (
     <>
       {editModal && (
         <Modal open={editModal} setOpen={setEditModal}>
           <div className="flex flex-col justify-between gap-5">
             <div>
-              <h2 className="mb-4 text-xl font-bold">Edit Expired Date</h2>
+              <h2 className="mb-4 text-xl font-bold">Edit</h2>
               <label className="block mb-2">Product ID</label>
               <input
                 type="text"
@@ -100,31 +77,28 @@ const Table = ({ columns, data, setData, message, onRowClick }) => {
                 value={editedData.productID}
                 onChange={handleInputChange}
                 className="w-full p-2 border rounded"
-                disabled
               />
-              <label className="block mt-4 mb-2">Item ID</label>
+              <label className="block mt-4 mb-2">Product Name</label>
               <input
                 type="text"
-                name="itemID"
-                value={editedData.itemID}
+                name="productName"
+                value={editedData.productName}
                 onChange={handleInputChange}
                 className="w-full p-2 border rounded"
-                disabled
               />
-              <label className="block mt-4 mb-2">Rack ID</label>
+              <label className="block mt-4 mb-2">Brand</label>
               <input
                 type="text"
-                name="rackID"
-                value={editedData.rackID}
+                name="brand"
+                value={editedData.brand}
                 onChange={handleInputChange}
                 className="w-full p-2 border rounded"
-                disabled
               />
-              <label className="block mt-4 mb-2">Expired Date</label>
+              <label className="block mt-4 mb-2">Category</label>
               <input
-                type="date"
-                name="expiredDate"
-                value={editedData.expiredDate}
+                type="text"
+                name="category"
+                value={editedData.category}
                 onChange={handleInputChange}
                 className="w-full p-2 border rounded"
               />
@@ -149,7 +123,7 @@ const Table = ({ columns, data, setData, message, onRowClick }) => {
             <div className="flex flex-row gap-4">
               <button
                 className="w-full rounded bg-red-500 px-4 py-2 text-white"
-                onClick={() => handleSaveDelete()}
+                onClick={() => setDeleteModal(false)}
               >
                 Yes
               </button>
@@ -204,7 +178,7 @@ const Table = ({ columns, data, setData, message, onRowClick }) => {
                         </button>
                         <button
                           className="p-1 rounded-md bg-danger"
-                          onClick={(e) => {e.stopPropagation(); handleDelete(row)}}
+                          onClick={(e) => {e.stopPropagation(); setDeleteModal(true)}}
                         >
                           <Image src={trash} alt="delete" />
                         </button>
@@ -222,4 +196,4 @@ const Table = ({ columns, data, setData, message, onRowClick }) => {
   );
 };
 
-export default Table;
+export default DashboardTable;

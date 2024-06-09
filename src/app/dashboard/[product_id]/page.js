@@ -1,10 +1,9 @@
-// DetailProduct.js
-"use client"; // Tandai sebagai Client Component
+"use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation'; // Menggunakan useRouter untuk Client Components
+import { useRouter } from 'next/navigation';
 import Table from "@/src/components/privates/table/Table";
 import { supabase } from "@/lib/supabaseClient";
-import { useParams } from 'next/navigation'
+import { useParams } from 'next/navigation';
 
 export default function DetailProduct() {
     const columns = [
@@ -12,12 +11,12 @@ export default function DetailProduct() {
         { label: 'Item ID', dataKey: 'itemID', width: 'w-1/5', align: 'left' },
         { label: 'Rack ID', dataKey: 'rackID', width: 'w-1/5', align: 'left' },
         { label: 'Expired Date', dataKey: 'expiredDate', width: 'w-1/5', align: 'center' },
-        { label: 'Actions', dataKey: 'aksi', width: 'w-1/5', align: 'center' },
+        { label: '', dataKey: 'aksi', width: 'w-1/5', align: 'center' },
     ];
 
     const [data, setData] = useState([]);
     const [productName, setProductName] = useState('');
-    const router = useRouter(); // Menggunakan useRouter untuk Client Components
+    const router = useRouter();
     const params = useParams();
     const productId = params.product_id;
 
@@ -53,7 +52,6 @@ export default function DetailProduct() {
                 itemID: item.item_id,
                 rackID: item.rack_id,
                 expiredDate: item.exp_date,
-                aksi: <div> {/* Actions here */} </div>
             }));
 
             setData(formattedData);
@@ -65,7 +63,7 @@ export default function DetailProduct() {
     return (
         <div className="w-full flex min-h-screen flex-col pt-16 px-20">
             <h1 className='text-brown-2 bold-48 mt-16 mb-4'>{productName}</h1>
-            <Table columns={columns} data={data} message='No data available' />
+            <Table columns={columns} data={data} setData={setData} message='No data available' />
         </div>
     );
 }

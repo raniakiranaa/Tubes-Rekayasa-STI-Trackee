@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Navbar } from "../components/shares/Nav";
+import { ToastContainer } from "react-toastify";
 
 export const metadata = {
   title: "Trackee",
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
           {children}
         </main>
         <Navbar />
+        <ToastContainer />
       </body>
     </html>
   );
