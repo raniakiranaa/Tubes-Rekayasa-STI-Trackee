@@ -43,14 +43,48 @@ export default function QRpage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            let product_id;
+            
+            // Check if the product already exists
+            const { data: existingProduct, error: existingProductError } = await supabase
+                .from('product')
+                .select('product_id')
+                .eq('name', productName)
+                .eq('category', category)
+                .eq('brand', brand)
+                .single();
+
+            if (existingProductError) {
+                console.error('Error checking existing product:', existingProductError.message);
+            }
+
+            if (existingProduct) {
+                product_id = existingProduct.product_id;
+            } else {
+                // Generate a new product ID
+                const { data: maxProduct, error: maxProductError } = await supabase
+                    .from('product')
+                    .select('product_id')
+                    .order('product_id', { ascending: false })
+                    .limit(1)
+                    .single();
+
+                if (maxProductError) {
+                    console.error('Error fetching max product ID:', maxProductError.message);
+                }
+
+                product_id = maxProduct ? parseInt(maxProduct.product_id) + 1 : 1;
+            }
+
             const jsonData = {
-                product_id: "12345",
+                product_id,
                 name: productName,
                 brand: brand,
                 category: category,
                 rack_id: rackId,
                 exp_date: expDate
             };
+
             router.push(`/qrResult?jsonData=${encodeURIComponent(JSON.stringify(jsonData))}`);
         } catch (error) {
             console.error('Error:', error.message);
@@ -86,7 +120,7 @@ export default function QRpage() {
                                     value={category}
                                     onChange={handleCategoryChange}
                                 >
-                                    <option value="">Select Category</option>
+                                    <option value="">Enter Product Category</option>
                                     {categories.map(cat => (
                                         <option key={cat.rack_id} value={cat.category}>{cat.category}</option>
                                     ))}
