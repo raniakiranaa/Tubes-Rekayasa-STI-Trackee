@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Navbar } from "@/components/shares/Nav";
+import { Navbar } from "../components/shares/Nav";
 
 export const metadata = {
   title: "Trackee",

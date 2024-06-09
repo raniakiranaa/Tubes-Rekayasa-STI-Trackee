@@ -8,7 +8,7 @@ export default function QRpage() {
                     <div className='text-brown-2 bold-48 mt-16'>Generate QR</div>
                     <div className="text-gray-2 medium-24 mt-2">Simply fill out the form beside <br />to find your desired product</div>
                 </div>
-                <div className="grow bg-white border border-gray-200 rounded-3xl shadow mt-20" style={{ width: 866, height: 691 }}>
+                <div className="grow bg-white border border-gray-200 rounded-3xl shadow mt-20 mb-20" style={{ width: 866, height: 691 }}>
                     <form>
                         <div className="flex flex-col gap-8 px-12 pt-12">
                             <Input label="Product Name" placeholder="Enter Product Name"/>

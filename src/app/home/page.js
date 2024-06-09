@@ -1,4 +1,4 @@
-import { Card } from '@/components/shares/Card'
+import { Card } from '../../components/shares/Card'
 
 export default function Homepage(){
     return (
