@@ -1,11 +1,11 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { Data } from '@/src/components/privates/result';
 import { supabase } from '../../../lib/supabaseClient';
 import { useSearchParams } from 'next/navigation';
 
-export default function Result() {
+function ResultComponent() {
     const searchParams = useSearchParams();
     const productId = searchParams.get('productId');
     const productName = searchParams.get('productName');
@@ -125,5 +125,13 @@ export default function Result() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function Result() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ResultComponent />
+        </Suspense>
     );
 }
