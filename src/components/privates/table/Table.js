@@ -4,10 +4,52 @@ import { Modal } from "../../shares/Modal";
 import Image from "next/image";
 import edit from "@/public/icons/edit.svg";
 import trash from "@/public/icons/trash.svg";
+import { supabase } from "../../../../lib/supabaseClient";
 
-const Table = ({ columns, data, message }) => {
+const Table = ({ columns, data, setData, message, onRowClick }) => {
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [currentRow, setCurrentRow] = useState(null);
+  const [editedData, setEditedData] = useState({});
+
+  const handleEdit = (row) => {
+    setCurrentRow(row);
+    setEditedData(row);
+    setEditModal(true);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedData({
+      ...editedData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async () => {
+    // Update the data in Supabase
+    const { error } = await supabase
+      .from('item')
+      .update({
+        product_id: editedData.productID,
+        item_id: editedData.itemID,
+        rack_id: editedData.rackID,
+        exp_date: editedData.expiredDate
+      })
+      .eq('product_id', currentRow.productID);
+
+    if (error) {
+      console.error('Error updating data:', error);
+      return;
+    }
+
+    // Update the local state
+    const updatedData = data.map((row) =>
+      row.productID === currentRow.productID ? editedData : row
+    );
+    setData(updatedData);
+    setEditModal(false);
+  };
 
   if (!columns || !data || data.length === 0) {
     return (
@@ -24,10 +66,42 @@ const Table = ({ columns, data, message }) => {
           <div className="flex flex-col justify-between gap-5">
             <div>
               <h2 className="mb-4 text-xl font-bold">Edit</h2>
+              <label className="block mb-2">Product ID</label>
+              <input
+                type="text"
+                name="productID"
+                value={editedData.productID}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+              />
+              <label className="block mt-4 mb-2">Item ID</label>
+              <input
+                type="text"
+                name="itemID"
+                value={editedData.itemID}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+              />
+              <label className="block mt-4 mb-2">Rack ID</label>
+              <input
+                type="text"
+                name="rackID"
+                value={editedData.rackID}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+              />
+              <label className="block mt-4 mb-2">Expired Date</label>
+              <input
+                type="text"
+                name="expiredDate"
+                value={editedData.expiredDate}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+              />
             </div>
             <button
               className="w-full rounded bg-black px-4 py-2 text-white"
-              onClick={() => setEditModal(false)}
+              onClick={handleSubmit}
             >
               Submit
             </button>
@@ -81,6 +155,7 @@ const Table = ({ columns, data, message }) => {
                 className={`${
                   rowIndex % 2 === 0 ? "bg-white" : "bg-white"
                 } `}
+                onClick={() => onRowClick && onRowClick(row)}
               >
                 {columns.map((column, colIndex) => (
                   <td
@@ -93,13 +168,13 @@ const Table = ({ columns, data, message }) => {
                       <div className="flex items-center justify-center gap-2">
                         <button
                           className="p-1 rounded-md bg-brown-3"
-                          onClick={() => setEditModal(true)}
+                          onClick={(e) => {e.stopPropagation(); handleEdit(row)}}
                         >
                           <Image src={edit} alt="edit" />
                         </button>
                         <button
                           className="p-1 rounded-md bg-danger"
-                          onClick={() => setDeleteModal(true)}
+                          onClick={(e) => {e.stopPropagation(); setDeleteModal(true)}}
                         >
                           <Image src={trash} alt="delete" />
                         </button>

@@ -1,4 +1,4 @@
-import { Data } from '@/components/privates/result'
+import { Data } from '@/src/components/privates/result'
 
 export default function Result() {
     return (

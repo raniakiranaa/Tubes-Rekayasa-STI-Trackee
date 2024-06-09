@@ -1,50 +1,71 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import Table from '../../components/privates/table/Table'; // Adjust the path as necessary
-import { supabase } from '../../../lib/supabaseClient';
+// Dashboard.js
+"use client";
+import React, { useEffect, useState } from "react";
+import Table from "../../components/privates/table/Table";
+import { useRouter } from 'next/navigation'; // Menggunakan useRouter untuk Client Components
+import { supabase } from "../../../lib/supabaseClient";
 
 export default function Dashboard() {
     const columns = [
         { label: 'Product ID', dataKey: 'productID', width: 'w-1/5', align: 'left' },
-        { label: 'Item ID', dataKey: 'itemID', width: 'w-1/5', align: 'left' },
-        { label: 'Rack ID', dataKey: 'rackID', width: 'w-1/5', align: 'left' },
-        { label: 'Expired Date', dataKey: 'expiredDate', width: 'w-1/5', align: 'center' },
-        { label: '', dataKey: 'aksi', width: 'w-1/5', align: 'center' },
+        { label: 'Product Name', dataKey: 'productName', width: 'w-1/5', align: 'left' },
+        { label: 'Brand', dataKey: 'brand', width: 'w-1/5', align: 'left' },
+        { label: 'Category', dataKey: 'category', width: 'w-1/5', align: 'left' },
+        { label: 'Stock', dataKey: 'stock', width: 'w-1/5', align: 'center' },
     ];
 
     const [data, setData] = useState([]);
+    const router = useRouter(); // Menggunakan useRouter untuk Client Components
 
     useEffect(() => {
         async function fetchData() {
-            const { data: fetchedData, error } = await supabase
-                .from('item')
+            const { data: products, error: productError } = await supabase
+                .from('product')
                 .select('*');
-            
-            if (error) {
-                console.error('Error fetching data:', error);
-            } else {
-                // Map fetched data to match table's expected structure
-                console.log('data', data);
-                const formattedData = fetchedData.map(item => ({
-                    productID: item.product_id,
-                    itemID: item.item_id,
-                    rackID: item.rack_id,
-                    expiredDate: item.exp_date,
-                    aksi: <div> {/* Actions here */} </div>
-                }));
 
-                setData(formattedData);
+            if (productError) {
+                console.error('Error fetching products:', productError);
+                return;
             }
+
+            const formattedData = [];
+
+            for (const product of products) {
+                const { data: items, error: itemsError } = await supabase
+                    .from('item')
+                    .select('count', { count: 'count(*)' })
+                    .eq('product_id', product.product_id);
+
+                if (itemsError) {
+                    console.error(`Error fetching items for product ${product.product_id}:`, itemsError);
+                    return;
+                }
+
+                const stock = items.length > 0 ? items[0].count : 0;
+
+                formattedData.push({
+                    productID: product.product_id,
+                    productName: product.name,
+                    brand: product.brand,
+                    category: product.category,
+                    stock: stock,
+                });
+            }
+
+            setData(formattedData);
         }
 
         fetchData();
     }, []);
 
+    const handleRowClick = (row) => {
+        router.push(`/dashboard/${row.productID}`);
+    };
+
     return (
         <div className="w-full flex min-h-screen flex-col pt-16 px-20">
             <h1 className='text-brown-2 bold-48 mt-16 mb-4'>Dashboard</h1>
-            <Table columns={columns} data={data} message='No data available' />
+            <Table columns={columns} data={data} onRowClick={handleRowClick} message='No data available' />
         </div>
     );
 }

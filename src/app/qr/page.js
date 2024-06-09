@@ -1,4 +1,4 @@
-import { Input } from "@/components/shares/Input"
+import { Input } from "@/src/components/shares/Input"
 
 export default function QRpage() {
     return (
