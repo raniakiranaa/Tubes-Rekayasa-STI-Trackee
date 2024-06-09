@@ -10,7 +10,7 @@ export default function Dashboard() {
         { label: 'Item ID', dataKey: 'itemID', width: 'w-1/5', align: 'left' },
         { label: 'Rack ID', dataKey: 'rackID', width: 'w-1/5', align: 'left' },
         { label: 'Expired Date', dataKey: 'expiredDate', width: 'w-1/5', align: 'center' },
-        { label: 'Actions', dataKey: 'aksi', width: 'w-1/5', align: 'center' },
+        { label: '', dataKey: 'aksi', width: 'w-1/5', align: 'center' },
     ];
 
     const [data, setData] = useState([]);
