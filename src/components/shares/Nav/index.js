@@ -24,16 +24,16 @@ export const Navbar = () => {
       }, [location]);
 
     return (
-        <nav class="bg-brown-3 fixed w-full z-20 top-0 start-0">
-            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a class="flex items-center space-x-3">
+        <nav className="bg-brown-3 fixed w-full z-20 top-0 start-0">
+            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <a className="flex items-center space-x-3">
                     <img src='/logo.svg' alt="logo"/>
                 </a>
-                <div class="flex md:order-2 space-x-3">
-                    <button type="button" class="text-white bg-brown-2 hover:bg-brown-1 rounded-3xl text-semibold-24 px-10 py-2 text-center">Sign Up</button>
+                <div className="flex md:order-2 space-x-3">
+                    <button type="button" className="text-white bg-brown-2 hover:bg-brown-1 rounded-3xl text-semibold-24 px-10 py-2 text-center">Sign Up</button>
                 </div>
-                <div class="items-center justify-between md:order-1">
-                    <ul class="flex flex-col md:p-0 mt-4 font-medium md:space-x-24 md:flex-row md:mt-0 md:border-0">
+                <div className="items-center justify-between md:order-1">
+                    <ul className="flex flex-col md:p-0 mt-4 font-medium md:space-x-24 md:flex-row md:mt-0 md:border-0">
                         <li>
                             <Link
                                 href="/"

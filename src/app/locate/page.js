@@ -8,7 +8,7 @@ export default function Locate() {
                     <div className='text-brown-2 bold-48 mt-16'>Locate Product</div>
                     <div className="text-gray-2 medium-24 mt-2">Find your preferred product <br/> through filling out this form.</div>
                 </div>
-                <div class="grow bg-white border border-gray-200 rounded-3xl shadow mt-20" style={{ width: 866, height: 691 }}>
+                <div className="grow bg-white border border-gray-200 rounded-3xl shadow mt-20" style={{ width: 866, height: 691 }}>
                     <form>
                         <div className="flex flex-col gap-8 px-12 pt-12">
                             <Input label="Product ID*" placeholder="Enter Product ID"/>
