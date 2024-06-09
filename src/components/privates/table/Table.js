@@ -12,7 +12,7 @@ const Table = ({ columns, data, message }) => {
     return (
         <div className="flex justify-center relative overflow-x-auto">
             <table className="w-full text-sm text-left text-gray-700">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-100 text-center">
+                <thead className="text-xs text-gray-700 uppercase bg-white border-b text-center font-bold">
                     <tr>
                         {columns.map((column, index) => (
                             <th 
@@ -27,7 +27,7 @@ const Table = ({ columns, data, message }) => {
                 </thead>
                 <tbody>
                     {data.map((row, rowIndex) => (
-                        <tr key={rowIndex} className={`${rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'} border-b`}>
+                        <tr key={rowIndex} className={`${rowIndex % 2 === 0 ? 'bg-white' : 'bg-white'}`}>
                             {columns.map((column, colIndex) => (
                                 <td
                                     key={colIndex}

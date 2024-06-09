@@ -1,5 +1,8 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import Table from '../../components/privates/table/Table'; // Adjust the path as necessary
+import { supabase } from '../../../lib/supabaseClient';
 
 export default function Dashboard() {
     const columns = [
@@ -10,12 +13,33 @@ export default function Dashboard() {
         { label: 'Actions', dataKey: 'aksi', width: 'w-1/5', align: 'center' },
     ];
 
-    const data = [
-        { productID: '#PA0001', itemID: '#IA0001', rackID: '#RA0001', expiredDate: '08 - 09 - 2025', aksi: <div> {/* Actions here */} </div> },
-        { productID: '#PA0001', itemID: '#IA0001', rackID: '#RA0001', expiredDate: '08 - 09 - 2025', aksi: <div> {/* Actions here */} </div> },
-        { productID: '#PA0001', itemID: '#IA0001', rackID: '#RA0001', expiredDate: '08 - 09 - 2025', aksi: <div> {/* Actions here */} </div> },
-        // Add more rows as needed
-    ];
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const { data: fetchedData, error } = await supabase
+                .from('item')
+                .select('*');
+            
+            if (error) {
+                console.error('Error fetching data:', error);
+            } else {
+                // Map fetched data to match table's expected structure
+                console.log('data', data);
+                const formattedData = fetchedData.map(item => ({
+                    productID: item.product_id,
+                    itemID: item.item_id,
+                    rackID: item.rack_id,
+                    expiredDate: item.exp_date,
+                    aksi: <div> {/* Actions here */} </div>
+                }));
+
+                setData(formattedData);
+            }
+        }
+
+        fetchData();
+    }, []);
 
     return (
         <div className="w-full flex min-h-screen flex-col pt-16 px-20">
