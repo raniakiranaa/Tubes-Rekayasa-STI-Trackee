@@ -1,10 +1,10 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import QRCode from 'qrcode.react';
 
-export default function QRResult() {
+function QRResultComponent(){
     const searchParams = useSearchParams();
     const jsonData = searchParams.get('jsonData');
     const [parsedData, setParsedData] = useState(null);
@@ -44,5 +44,13 @@ export default function QRResult() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function QRResult() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <QRResultComponent />
+        </Suspense>
     );
 }
