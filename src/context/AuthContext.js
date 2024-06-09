@@ -23,7 +23,7 @@ useEffect(() => {
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, signIn, signOut }}>
-      {!loading && children}
+      {loading ? <div></div> : children}
     </AuthContext.Provider>
   );
 };
