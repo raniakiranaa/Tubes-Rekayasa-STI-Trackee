@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Input } from "@/src/components/shares/Input";
 import { supabase } from '../../../lib/supabaseClient';
+import { toastError, toastSuccess } from '@/src/components/shares/Toast';
 
 export default function QRpage() {
     const [productName, setProductName] = useState('');
@@ -86,8 +87,10 @@ export default function QRpage() {
             };
 
             router.push(`/qrResult?jsonData=${encodeURIComponent(JSON.stringify(jsonData))}`);
+            toastSuccess("Generate QR Successful!");
         } catch (error) {
             console.error('Error:', error.message);
+            toastError("Generate QR failed");
         }
     };
 

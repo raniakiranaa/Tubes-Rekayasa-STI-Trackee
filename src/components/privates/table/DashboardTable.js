@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import { Modal } from "../../shares/modal/index";
 import Image from "next/image";
@@ -12,6 +11,8 @@ const DashboardTable = ({ columns, data, setData, message, onRowClick }) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [currentRow, setCurrentRow] = useState(null);
   const [editedData, setEditedData] = useState({});
+
+  const categories = ["food", "kitchenware", "cleaning_essential"];
 
   const handleEdit = (row) => {
     setCurrentRow(row);
@@ -27,8 +28,15 @@ const DashboardTable = ({ columns, data, setData, message, onRowClick }) => {
     });
   };
 
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    setEditedData({
+      ...editedData,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = async () => {
-    // Update the data in Supabase
     const { error } = await supabase
       .from('product')
       .update({
@@ -47,7 +55,6 @@ const DashboardTable = ({ columns, data, setData, message, onRowClick }) => {
       toastSuccess('Edit product successful!');
     }
 
-    // Update the local state
     const updatedData = data.map((row) =>
       row.productID === currentRow.productID ? editedData : row
     );
@@ -95,13 +102,18 @@ const DashboardTable = ({ columns, data, setData, message, onRowClick }) => {
                 className="w-full p-2 border rounded"
               />
               <label className="block mt-4 mb-2">Category</label>
-              <input
-                type="text"
+              <select
                 name="category"
                 value={editedData.category}
-                onChange={handleInputChange}
+                onChange={handleSelectChange}
                 className="w-full p-2 border rounded"
-              />
+              >
+                {categories.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
             </div>
             <button
               className="w-full rounded bg-brown-2 px-4 py-2 text-white"
