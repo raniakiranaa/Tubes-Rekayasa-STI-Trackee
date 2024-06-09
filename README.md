@@ -12,10 +12,11 @@ Trackee adalah aplikasi manajemen gudang berbasis web dan mobile (Warehouse Mana
 
 ## ⭐️ Panduan Penggunaan Trackee ⭐️
 1. Masuk tautan [deployment](https://trackee-rekayasa-sti.vercel.app/).
-2. Pada landing page, terdapat 3 pilihan menu, yaitu dashboard, QR, dan locate.
-3. Alur pemakaian dapat dimulai dari halaman dashboard yang berisi daftar produk yang tersedia di gudang beserta detail produk, seperti nama, kategori, merk, dan stok. Di halaman ini juga terdapat opsi untuk mengedit serta menghapus produk.
-4. Klik halaman QR pada navbar untuk melakukan generate QR code berisi data produk.
-5. Klik halaman Locate pada navbar untuk melacak letak produk di dalam gudang.
+2. Sebelum memasuki Trackee, pengguna harus melakukan login terlebih dahulu. Pengguna tidak dapat menambahkan akses secara manual karena penambahan akses hanya dapat dilakukan oleh admin. Untuk itu, berikut adalah contoh akun yang telah dibuat oleh Admin. **email** : `vincentwinarta8@gmail.com`  dan **password** : `trackee`
+3. Setelah berhasil masuk menggunakan akun, pengguna akan menuju landing page. Di dalamnya, terdapat 3 pilihan menu, yaitu dashboard, QR, dan locate.
+4. Alur pemakaian dapat dimulai dari halaman dashboard yang berisi daftar produk yang tersedia di gudang beserta detail produk, seperti nama, kategori, merk, dan stok. Di halaman ini juga terdapat opsi untuk mengedit serta menghapus produk.
+5. Klik halaman QR pada navbar untuk melakukan generate QR code berisi data produk.
+6. Klik halaman Locate pada navbar untuk melacak letak produk di dalam gudang.
 
 ## Tech Stack
 Web application:
