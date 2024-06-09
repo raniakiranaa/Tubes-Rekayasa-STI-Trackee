@@ -14,7 +14,7 @@ export const Navbar = () => {
           setActive(0);
         } else if (location == "/dashboard") {
           setActive(1);
-        } else if (location == "/qr") {
+        } else if (location == "/qr" || location == '/qrResult') {
           setActive(2);
         } else if (location == "/locate" || location == "/result") {
           setActive(3);

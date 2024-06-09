@@ -108,8 +108,10 @@ export default function Result() {
                 </div>
                 <div className="grow bg-white border border-gray-200 rounded-3xl shadow mt-20 mb-20" style={{ width: 866, height: 691 }}>
                     {errorMessage ? (
-                        <div className="text-red-500 text-left mt-4 px-12">
-                            {errorMessage}
+                        <div className="flex flex-col items-center justify-center h-full">
+                            <div className="text-brown-2 text-center bold-36 mt-4 px-12">
+                                {errorMessage}
+                            </div>
                         </div>
                     ) : (
                         <Data
