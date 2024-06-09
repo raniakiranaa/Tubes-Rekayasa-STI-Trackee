@@ -126,12 +126,15 @@ export default function QRpage() {
                                     ))}
                                 </select>
                             </div>
-                            <Input
-                                label="Expired Date"
-                                placeholder="Enter Product Expired Date"
-                                value={expDate}
-                                onChange={(e) => setExpDate(e.target.value)}
-                            />
+                             <div className="flex flex-col">
+                                <label className="block mb-2 text-sm bold-20 text-brown-2 pb-3">Expired Date</label>
+                                <input
+                                    type="date"
+                                    className="bg-gray-50 border border-gray-3 text-gray-2 text-sm rounded-lg block w-full p-4 medium-16"
+                                    value={expDate}
+                                    onChange={(e) => setExpDate(e.target.value)}
+                                />
+                            </div>
                         </div>
                         <div className="w-fit flex flex-row bg-brown-2 rounded-3xl px-12 py-3 mt-[60px] gap-8 mx-12 mt-11">
                             <button type="submit" className="text-white medium-18 text-center">
