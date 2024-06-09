@@ -12,7 +12,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className='flex flex-col min-h-screen'>
-        
           <AuthProvider>
             <main className='relative overflow-hidden bg_dashboard flex-1'>
               {children}

@@ -1,6 +1,7 @@
 "use client"; 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
 
 const AuthContext = createContext();
 
@@ -12,14 +13,26 @@ export const AuthProvider = ({ children }) => {
   const signOut = () => setIsAuthenticated(false);
   const router = useRouter();
 
-useEffect(() => {
-    if(!isAuthenticated) {
-        router.push('/login');
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await supabase.auth.getUser();
 
-    setLoading(false);
-  
-}, []);
+        // Check if user is authenticated
+        if (!data.data.user) {
+          router.push('/login');
+        } else {
+          signIn();
+        }
+      } catch (error) {
+        console.error('Error fetching user:', error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, signIn, signOut }}>
