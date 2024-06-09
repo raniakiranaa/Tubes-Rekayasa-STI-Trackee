@@ -7,13 +7,10 @@ import close from "@/public/icons/close.svg";
 export const Modal = ({ open, setOpen, children }) => {
   useEffect(() => {
     if (open) {
-      // Disable scrolling on the body when modal is open
       document.body.style.overflow = "hidden";
     } else {
-      // Re-enable scrolling on the body when modal is closed
       document.body.style.overflow = "auto";
     }
-    // Cleanup function
     return () => {
       document.body.style.overflow = "";
     };

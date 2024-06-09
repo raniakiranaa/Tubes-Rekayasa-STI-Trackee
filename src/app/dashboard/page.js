@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import DashboardTable from "../../components/privates/table/DashboardTable";
-import { useRouter } from 'next/navigation'; // Menggunakan useRouter untuk Client Components
+import { useRouter } from 'next/navigation'; 
 import { supabase } from "../../../lib/supabaseClient";
 
 export default function Dashboard() {
@@ -15,7 +15,7 @@ export default function Dashboard() {
     ];
 
     const [data, setData] = useState([]);
-    const router = useRouter(); // Menggunakan useRouter untuk Client Components
+    const router = useRouter();
 
     useEffect(() => {
         async function fetchData() {
